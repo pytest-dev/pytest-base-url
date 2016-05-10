@@ -13,6 +13,9 @@ URL via the command line or configuration file.
 .. image:: https://img.shields.io/github/issues-raw/davehunt/pytest-base-url.svg
    :target: https://github.com/davehunt/pytest-base-url/issues
    :alt: Issues
+.. image:: https://img.shields.io/requires/github/davehunt/pytest-base-url.svg
+   :target: https://requires.io/github/davehunt/pytest-base-url/requirements/?branch=master
+   :alt: Requirements
 
 Requirements
 ------------
