@@ -7,6 +7,9 @@ URL via the command line or configuration file.
 .. image:: https://img.shields.io/badge/license-MPL%202.0-blue.svg
    :target: https://github.com/davehunt/pytest-base-url/blob/master/LICENSE
    :alt: License
+.. image:: https://img.shields.io/pypi/v/pytest-base-url.svg
+   :target: https://pypi.python.org/pypi/pytest-base-url/
+   :alt: PyPI
 .. image:: https://img.shields.io/travis/davehunt/pytest-base-url.svg
    :target: https://travis-ci.org/davehunt/pytest-base-url/
    :alt: Travis
