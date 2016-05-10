@@ -35,7 +35,7 @@ To install pytest-base-url:
 
 .. code-block:: bash
 
-  $ pip install git+git://github.com/davehunt/pytest-base-url
+  $ pip install pytest-base-url
 
 Specifying a Base URL
 ---------------------
