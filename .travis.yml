@@ -15,6 +15,7 @@ env:
     - TOXENV=pypy3-pytest29
     - TOXENV=flake8
 install:
+  - pip install virtualenv==15.0.1
   - pip install tox
 script:
-  - tox
+  - VIRTUALENV_DOWNLOAD=no tox
