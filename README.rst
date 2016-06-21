@@ -5,19 +5,19 @@ pytest-base-url is a simple plugin for pytest_ that provides an optional base
 URL via the command line or configuration file.
 
 .. image:: https://img.shields.io/badge/license-MPL%202.0-blue.svg
-   :target: https://github.com/davehunt/pytest-base-url/blob/master/LICENSE
+   :target: https://github.com/pytest-dev/pytest-base-url/blob/master/LICENSE
    :alt: License
 .. image:: https://img.shields.io/pypi/v/pytest-base-url.svg
    :target: https://pypi.python.org/pypi/pytest-base-url/
    :alt: PyPI
-.. image:: https://img.shields.io/travis/davehunt/pytest-base-url.svg
-   :target: https://travis-ci.org/davehunt/pytest-base-url/
+.. image:: https://img.shields.io/travis/pytest-dev/pytest-base-url.svg
+   :target: https://travis-ci.org/pytest-dev/pytest-base-url/
    :alt: Travis
-.. image:: https://img.shields.io/github/issues-raw/davehunt/pytest-base-url.svg
-   :target: https://github.com/davehunt/pytest-base-url/issues
+.. image:: https://img.shields.io/github/issues-raw/pytest-dev/pytest-base-url.svg
+   :target: https://github.com/pytest-dev/pytest-base-url/issues
    :alt: Issues
-.. image:: https://img.shields.io/requires/github/davehunt/pytest-base-url.svg
-   :target: https://requires.io/github/davehunt/pytest-base-url/requirements/?branch=master
+.. image:: https://img.shields.io/requires/github/pytest-dev/pytest-base-url.svg
+   :target: https://requires.io/github/pytest-dev/pytest-base-url/requirements/?branch=master
    :alt: Requirements
 
 Requirements
@@ -142,5 +142,5 @@ Resources
 .. _pytest-django: http://pytest-django.readthedocs.org/
 .. _pytest-flask: http://pytest-flask.readthedocs.org/
 .. _skip tests: http://pytest.org/latest/skipping.html
-.. _Issue Tracker: http://github.com/davehunt/pytest-base-url/issues
-.. _Code: http://github.com/davehunt/pytest-base-url
+.. _Issue Tracker: http://github.com/pytest-dev/pytest-base-url/issues
+.. _Code: http://github.com/pytest-dev/pytest-base-url
