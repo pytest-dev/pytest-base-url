@@ -134,6 +134,7 @@ value at test collection.
 Resources
 ---------
 
+- `Release Notes`_
 - `Issue Tracker`_
 - Code_
 
@@ -142,5 +143,6 @@ Resources
 .. _pytest-django: http://pytest-django.readthedocs.org/
 .. _pytest-flask: http://pytest-flask.readthedocs.org/
 .. _skip tests: http://pytest.org/latest/skipping.html
+.. _Release Notes:  http://github.com/pytest-dev/pytest-base-url/blob/master/CHANGES.rst
 .. _Issue Tracker: http://github.com/pytest-dev/pytest-base-url/issues
 .. _Code: http://github.com/pytest-dev/pytest-base-url
