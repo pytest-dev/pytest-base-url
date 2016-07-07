@@ -40,6 +40,12 @@ def pytest_configure(config):
         config.option.base_url = base_url
 
 
+def pytest_report_header(config, startdir):
+    base_url = config.getoption('base_url')
+    if base_url:
+        return 'baseurl: {0}'.format(base_url)
+
+
 def pytest_addoption(parser):
     parser.addini('base_url', help='base url for the application under test.')
     parser.addoption(
