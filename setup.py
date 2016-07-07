@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='pytest-base-url',
-      version='1.1.0dev1',
+      version='1.1.0',
       description='pytest plugin for URL based testing',
       long_description=open('README.rst').read(),
       author='Dave Hunt',
