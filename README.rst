@@ -69,6 +69,15 @@ You can specify the base URL using a `configuration file`_:
   [pytest]
   base_url = http://www.example.com
 
+Using an environment variable
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+You can specify the base URL with an environment variable:
+
+.. code-block:: bash
+
+   export PYTEST_BASE_URL="http://www.example.com"
+
 Using a Fixture
 ^^^^^^^^^^^^^^^
 
