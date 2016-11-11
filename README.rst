@@ -69,10 +69,10 @@ You can specify the base URL using a `configuration file`_:
   [pytest]
   base_url = http://www.example.com
 
-Environment Variable
-^^^^^^^^^^^^^^^^^^^^
+Using an Environment Variable
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-You can specify the base URL by setting the `PYTEST_BASE_URL` environment variable.
+You can specify the base URL by setting the ``PYTEST_BASE_URL`` environment variable.
 
 Using a Fixture
 ^^^^^^^^^^^^^^^
