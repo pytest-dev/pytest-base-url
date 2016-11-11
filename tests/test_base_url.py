@@ -54,3 +54,15 @@ def test_skip_config(testdir):
     """)
     result = testdir.runpytest()
     assert result.ret == 0
+
+
+def test_env_var_set(testdir, monkeypatch):
+    testdir.makepyfile("""
+        def test_config(request, base_url):
+            assert request.config.getvalue('base_url')
+            assert base_url == 'yeehaw'
+    """)
+    monkeypatch.setenv('PYTEST_BASE_URL', 'yeehaw')
+    reprec = testdir.inline_run()
+    passed, skipped, failed = reprec.listoutcomes()
+    assert len(passed) == 1

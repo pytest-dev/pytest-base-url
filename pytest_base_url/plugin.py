@@ -45,6 +45,7 @@ def pytest_addoption(parser):
     parser.addoption(
         '--base-url',
         metavar='url',
+        default=os.getenv('PYTEST_BASE_URL', None),
         help='base url for the application under test.')
     parser.addoption(
         '--verify-base-url',
