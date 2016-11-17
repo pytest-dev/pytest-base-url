@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='pytest-base-url',
-      version='1.1.0',
+      use_scm_version=True,
       description='pytest plugin for URL based testing',
       long_description=open('README.rst').read(),
       author='Dave Hunt',
@@ -11,6 +11,7 @@ setup(name='pytest-base-url',
       install_requires=[
           'pytest>=2.7.3',
           'requests'],
+      setup_requires=['setuptools_scm'],
       entry_points={'pytest11': ['base_url = pytest_base_url.plugin']},
       license='Mozilla Public License 2.0 (MPL 2.0)',
       keywords='py.test pytest base url mozilla automation',
