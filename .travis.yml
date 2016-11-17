@@ -21,3 +21,14 @@ install:
   - pip install tox-travis
 script:
   - tox
+deploy:
+  provider: pypi
+  user: davehunt
+  password:
+    secure: "aSevNdJQLPH1S1TNaI+uSFdiZ+dEQkkvmLym5eA8vjvo0fV4FEQfjZg8rW69hfYAGA4EFkE3hQUs5IQIm5ug+A3FsMDjom4nAhCthq8g/5hviT+V6wVzoVdxf0JhlpLtDFteFTOKj5Z9PC/xhJJ/2/JrzmEwUwopiNtSNBdVwRXCOvb6L3aIU5DmTtuWokpBNmv4H2cdjCxwLROSlKdfFr4urUwiOst/A5W1HvdxWhEkQL7fLx/sUOHobYjkoL32miTpSHUJNH1L0G8uciMdtXTBY3HQ/uRfWaDs3iJ7Iwtk2hEB1ukPZiXtBX0FjTJXd71a4BvvG1FSQgeQ4zW1Fzf8Xz5qg0Z1Z+7DTFzekhd1AfcwDlr2Vh7xD6FCBSjFyAIXQ0n36mtoEfHDM6RQMQSQZm4j+4EOdFf9kfWsTn9XGWCr47r3qe+6SUzGSvHcD6LeoZZ2ZJjSk37vdQ0y28yvZr5goBFwY11MMjMVqLSA4mWhhueBWA7il9ciwfJbb6RThBfnHYdT8l4NRztkXz6QaW4KCJNVr3aE3MwPLzfux9JUUml//JUjuhChLpEvrAM6CRliZSawKdE9E2o5QOISt7yiEVdaxohAcfTkj5X+WTS5QBYjT/8+iV6KWDjghm/FH13/WZlcqMfC7be+EgXvqv3ffUanX7jnpzdg1sQ="
+  distributions: sdist bdist_wheel
+  on:
+    tags: true
+    repo: pytest-dev/pytest-base-url
+    python: 3.5
+    condition: "$TOXENV = pytest30"
