@@ -1,6 +1,11 @@
 Release Notes
 -------------
 
+**1.3.0 (2017-02-27)**
+
+* Add base URL to metadata provided by `pytest-metadata
+<https://pypi.python.org/pypi/pytest-metadata/>`_.
+
 **1.2.0 (2016-11-17)**
 
 * Added support for specifying the base URL by environment variable

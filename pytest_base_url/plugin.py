@@ -14,8 +14,6 @@ def base_url(request):
     config = request.config
     base_url = config.getoption('base_url')
     if base_url is not None:
-        if hasattr(config, '_environment'):
-            config._environment.append(('Base URL', base_url))
         return base_url
 
 
@@ -38,6 +36,8 @@ def pytest_configure(config):
     base_url = config.getoption('base_url') or config.getini('base_url')
     if base_url is not None:
         config.option.base_url = base_url
+        if hasattr(config, '_metadata'):
+            config._metadata['Base URL'] = base_url
 
 
 def pytest_report_header(config, startdir):
