@@ -21,13 +21,17 @@ def base_url(request):
 def _verify_url(request, base_url):
     """Verifies the base URL"""
     verify = request.config.option.verify_base_url
+    attempts = request.config.getoption('verify_attempts')
     if base_url and verify:
-        response = requests.get(base_url, timeout=10)
-        if not response.status_code == requests.codes.ok:
-            raise pytest.UsageError(
-                'Base URL failed verification!'
-                '\nURL: {0}, Response status code: {1.status_code}'
-                '\nResponse headers: {1.headers}'.format(base_url, response))
+        for _ in range(attempts):
+            response = requests.get(base_url, timeout=10)
+            if not response.status_code == requests.codes.ok:
+                continue
+        raise pytest.UsageError(
+            'Base URL failed verification! Tried {0} times.'
+            '\nURL: {1}, Response status code: {2.status_code}'
+            '\nResponse headers: {2.headers}'.format(
+                attempts, base_url, response))
 
 
 def pytest_configure(config):
@@ -58,3 +62,8 @@ def pytest_addoption(parser):
         action='store_true',
         default=not os.getenv('VERIFY_BASE_URL', 'false').lower() == 'false',
         help='verify the base url.')
+    parser.addoption(
+        '--verify-attempts',
+        type=int,
+        default=os.getenv('VERIFY_BASE_URL_ATTEMPTS', None),
+        help='amount of times to try and verify the base url.')
