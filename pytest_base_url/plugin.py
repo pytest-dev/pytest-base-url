@@ -3,6 +3,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import os
+import time
 
 import pytest
 import requests
@@ -21,17 +22,21 @@ def base_url(request):
 def _verify_url(request, base_url):
     """Verifies the base URL"""
     verify = request.config.option.verify_base_url
-    attempts = request.config.getoption('verify_attempts')
+    verify_timeout = request.config.getoption('verify_base_url_timeout')
     if base_url and verify:
-        for _ in range(attempts):
-            response = requests.get(base_url, timeout=10)
-            if not response.status_code == requests.codes.ok:
+        timeout = time.time() + verify_timeout
+        while time.time() < timeout:
+            try:
+                response = requests.get(base_url, timeout=1)
+            except Exception:
                 continue
-        raise pytest.UsageError(
-            'Base URL failed verification! Tried {0} times.'
-            '\nURL: {1}, Response status code: {2.status_code}'
-            '\nResponse headers: {2.headers}'.format(
-                attempts, base_url, response))
+        try:
+            response.status_code == requests.codes.ok
+        except UnboundLocalError:
+            raise pytest.UsageError(
+                'Base URL failed verification!'
+                '\nURL: {0}. Tried for {1} seconds'.format(
+                    base_url, verify_timeout))
 
 
 def pytest_configure(config):
@@ -63,7 +68,7 @@ def pytest_addoption(parser):
         default=not os.getenv('VERIFY_BASE_URL', 'false').lower() == 'false',
         help='verify the base url.')
     parser.addoption(
-        '--verify-attempts',
+        '--verify-base-url-timeout',
         type=int,
-        default=os.getenv('VERIFY_BASE_URL_ATTEMPTS', None),
-        help='amount of times to try and verify the base url.')
+        default=os.getenv('VERIFY_BASE_URL_TIMEOUT', None),
+        help='amount of time to verify the base url.')
