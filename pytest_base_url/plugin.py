@@ -3,10 +3,12 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import os
-import time
 
 import pytest
 import requests
+
+from requests.packages.urllib3.util.retry import Retry
+from requests.adapters import HTTPAdapter
 
 
 @pytest.fixture(scope='session')
@@ -22,21 +24,21 @@ def base_url(request):
 def _verify_url(request, base_url):
     """Verifies the base URL"""
     verify = request.config.option.verify_base_url
-    verify_timeout = request.config.getoption('verify_base_url_timeout')
+    verify_timeout = request.config.getoption('verify_base_url_attempts')
     if base_url and verify:
-        timeout = time.time() + verify_timeout
-        while time.time() < timeout:
-            try:
-                response = requests.get(base_url, timeout=1)
-            except Exception:
-                continue
+        session = requests.Session()
+        retries = Retry(total=verify_timeout,
+                        backoff_factor=0.1,
+                        status_forcelist=[500, 502, 503, 504])
+        session.mount(base_url, HTTPAdapter(max_retries=retries))
         try:
-            response.status_code == requests.codes.ok
-        except UnboundLocalError:
-            raise pytest.UsageError(
-                'Base URL failed verification!'
-                '\nURL: {0}. Tried for {1} seconds'.format(
-                    base_url, verify_timeout))
+            session.get(base_url)
+        except Exception:
+            if retries.raise_on_status:
+                raise pytest.UsageError(
+                        'URL failed to load. Most likely due to one of these '
+                        'HTTP error codes: {0}. Tried {1} times.'.format(
+                            retries.status_forcelist, retries.total))
 
 
 def pytest_configure(config):
@@ -68,7 +70,7 @@ def pytest_addoption(parser):
         default=not os.getenv('VERIFY_BASE_URL', 'false').lower() == 'false',
         help='verify the base url.')
     parser.addoption(
-        '--verify-base-url-timeout',
+        '--verify-base-url-attempts',
         type=int,
-        default=os.getenv('VERIFY_BASE_URL_TIMEOUT', None),
-        help='amount of time to verify the base url.')
+        default=os.getenv('VERIFY_BASE_URL_ATTEMPTS', 10),
+        help='amount of time to verify the base url in seconds.')
