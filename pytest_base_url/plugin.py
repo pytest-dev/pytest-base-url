@@ -24,21 +24,22 @@ def base_url(request):
 def _verify_url(request, base_url):
     """Verifies the base URL"""
     verify = request.config.option.verify_base_url
-    verify_timeout = request.config.getoption('verify_base_url_attempts')
     if base_url and verify:
         session = requests.Session()
-        retries = Retry(total=verify_timeout,
-                        backoff_factor=0.1,
+        retries = Retry(backoff_factor=0.1,
                         status_forcelist=[500, 502, 503, 504])
         session.mount(base_url, HTTPAdapter(max_retries=retries))
         try:
             session.get(base_url)
         except Exception:
-            if retries.raise_on_status:
-                raise pytest.UsageError(
-                        'URL failed to load. Most likely due to one of these '
-                        'HTTP error codes: {0}. Tried {1} times.'.format(
-                            retries.status_forcelist, retries.total))
+            raise pytest.UsageError(
+                    'Base URL failed verification!'
+                    '\nURL: {0}'
+                    '\nPotential HTTP error codes: {1} .'
+                    '\nTried {2} times'
+                    '\nResponse headers: {3}'.format(
+                        base_url, retries.status_forcelist,
+                        retries.total, session.headers))
 
 
 def pytest_configure(config):
@@ -69,8 +70,3 @@ def pytest_addoption(parser):
         action='store_true',
         default=not os.getenv('VERIFY_BASE_URL', 'false').lower() == 'false',
         help='verify the base url.')
-    parser.addoption(
-        '--verify-base-url-attempts',
-        type=int,
-        default=os.getenv('VERIFY_BASE_URL_ATTEMPTS', 10),
-        help='amount of time to verify the base url in seconds.')
