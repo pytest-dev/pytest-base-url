@@ -3,7 +3,6 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import pytest
-
 from requests.packages.urllib3.util.retry import Retry
 
 
@@ -22,7 +21,7 @@ def test_ignore_bad_url_by_default(testdir, httpserver):
 def test_enable_verify_via_cli(testdir, httpserver, monkeypatch):
     testdir.makepyfile('def test_pass(): pass')
     monkeypatch.setenv('VERIFY_BASE_URL', False)
-    monkeypatch.setattr(Retry, 'BACKOFF_MAX', 5)
+    monkeypatch.setattr(Retry, 'BACKOFF_MAX', 0.5)
     status_code = 500
     httpserver.serve_content(content='<h1>Error!</h1>', code=status_code)
     reprec = testdir.inline_run('--base-url', httpserver.url,
@@ -30,28 +29,22 @@ def test_enable_verify_via_cli(testdir, httpserver, monkeypatch):
     passed, skipped, failed = reprec.listoutcomes()
     assert len(failed) == 1
     out = failed[0].longrepr.reprcrash.message
-    assert 'UsageError: Base URL failed verification!' in out
-    assert 'URL: {0}'.format(httpserver.url) in out
-    assert 'Potential HTTP error codes: [500, 502, 503, 504].'
-    assert 'Tried 10 times' in out
-    assert 'Response headers: ' in out
+    assert 'Max retries exceeded with url:' in out
+    assert "Caused by ResponseError('too many 500 error responses',)" in out
 
 
 def test_enable_verify_via_env(testdir, httpserver, monkeypatch):
     testdir.makepyfile('def test_pass(): pass')
     monkeypatch.setenv('VERIFY_BASE_URL', True)
-    monkeypatch.setattr(Retry, 'BACKOFF_MAX', 5)
+    monkeypatch.setattr(Retry, 'BACKOFF_MAX', 0.5)
     status_code = 500
     httpserver.serve_content(content='<h1>Error!</h1>', code=status_code)
     reprec = testdir.inline_run('--base-url', httpserver.url)
     passed, skipped, failed = reprec.listoutcomes()
     assert len(failed) == 1
     out = failed[0].longrepr.reprcrash.message
-    assert 'UsageError: Base URL failed verification!' in out
-    assert 'URL: {0}'.format(httpserver.url) in out
-    assert 'Potential HTTP error codes: [500, 502, 503, 504].'
-    assert 'Tried 10 times' in out
-    assert 'Response headers: ' in out
+    assert 'Max retries exceeded with url:' in out
+    assert "Caused by ResponseError('too many 500 error responses',)" in out
 
 
 def test_disable_verify_via_env(testdir, httpserver, monkeypatch):
@@ -62,19 +55,11 @@ def test_disable_verify_via_env(testdir, httpserver, monkeypatch):
     assert result.ret == 0
 
 
-def test_verify_retries_url(testdir, httpserver, monkeypatch):
+def test_url_fails(testdir, httpserver, monkeypatch):
     testdir.makepyfile('def test_pass(): pass')
     monkeypatch.setenv('VERIFY_BASE_URL', False)
-    monkeypatch.setattr(Retry, 'BACKOFF_MAX', 5)
-    httpserver.serve_content(content='<h1>Error!</h1>', code=500)
-    reprec = testdir.inline_run('--base-url', httpserver.url,
+    monkeypatch.setattr(Retry, 'BACKOFF_MAX', 0.5)
+    reprec = testdir.inline_run('--base-url', 'http://foo',
                                 '--verify-base-url')
     passed, skipped, failed = reprec.listoutcomes()
     assert len(failed) == 1
-    out = failed[0].longrepr.reprcrash.message
-    assert 'UsageError: Base URL failed verification!' in out
-    httpserver.serve_content(content='<h1>Loaded!</h1>')
-    reprec = testdir.inline_run('--base-url', httpserver.url,
-                                '--verify-base-url')
-    passed, skipped, failed = reprec.listoutcomes()
-    assert len(passed) == 1

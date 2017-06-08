@@ -6,7 +6,6 @@ import os
 
 import pytest
 import requests
-
 from requests.packages.urllib3.util.retry import Retry
 from requests.adapters import HTTPAdapter
 
@@ -29,17 +28,7 @@ def _verify_url(request, base_url):
         retries = Retry(backoff_factor=0.1,
                         status_forcelist=[500, 502, 503, 504])
         session.mount(base_url, HTTPAdapter(max_retries=retries))
-        try:
-            session.get(base_url)
-        except Exception:
-            raise pytest.UsageError(
-                    'Base URL failed verification!'
-                    '\nURL: {0}'
-                    '\nPotential HTTP error codes: {1} .'
-                    '\nTried {2} times'
-                    '\nResponse headers: {3}'.format(
-                        base_url, retries.status_forcelist,
-                        retries.total, session.headers))
+        session.get(base_url)
 
 
 def pytest_configure(config):
