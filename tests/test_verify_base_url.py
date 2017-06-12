@@ -30,7 +30,8 @@ def test_enable_verify_via_cli(testdir, httpserver, monkeypatch):
     assert len(failed) == 1
     out = failed[0].longrepr.reprcrash.message
     assert 'Max retries exceeded with url:' in out
-    assert "Caused by ResponseError('too many 500 error responses',)" in out
+    assert 'Caused by ResponseError' in out
+    assert 'too many 500 error responses' in out
 
 
 def test_enable_verify_via_env(testdir, httpserver, monkeypatch):
@@ -44,7 +45,8 @@ def test_enable_verify_via_env(testdir, httpserver, monkeypatch):
     assert len(failed) == 1
     out = failed[0].longrepr.reprcrash.message
     assert 'Max retries exceeded with url:' in out
-    assert "Caused by ResponseError('too many 500 error responses',)" in out
+    assert 'Caused by ResponseError' in out
+    assert 'too many 500 error responses' in out
 
 
 def test_disable_verify_via_env(testdir, httpserver, monkeypatch):
@@ -62,4 +64,8 @@ def test_url_fails(testdir, httpserver, monkeypatch):
     reprec = testdir.inline_run('--base-url', 'http://foo',
                                 '--verify-base-url')
     passed, skipped, failed = reprec.listoutcomes()
+    out = failed[0].longrepr.reprcrash.message
     assert len(failed) == 1
+    assert 'Max retries exceeded with url:' in out
+    assert 'Caused by NewConnectionError' in out
+    assert 'Failed to establish a new connection' in out
