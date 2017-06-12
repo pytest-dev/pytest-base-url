@@ -6,6 +6,8 @@ import os
 
 import pytest
 import requests
+from requests.packages.urllib3.util.retry import Retry
+from requests.adapters import HTTPAdapter
 
 
 @pytest.fixture(scope='session')
@@ -22,12 +24,11 @@ def _verify_url(request, base_url):
     """Verifies the base URL"""
     verify = request.config.option.verify_base_url
     if base_url and verify:
-        response = requests.get(base_url, timeout=10)
-        if not response.status_code == requests.codes.ok:
-            raise pytest.UsageError(
-                'Base URL failed verification!'
-                '\nURL: {0}, Response status code: {1.status_code}'
-                '\nResponse headers: {1.headers}'.format(base_url, response))
+        session = requests.Session()
+        retries = Retry(backoff_factor=0.1,
+                        status_forcelist=[500, 502, 503, 504])
+        session.mount(base_url, HTTPAdapter(max_retries=retries))
+        session.get(base_url)
 
 
 def pytest_configure(config):
