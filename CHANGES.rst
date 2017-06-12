@@ -1,6 +1,12 @@
 Release Notes
 -------------
 
+**1.4.0 (2017-06-12)**
+
+* Add verify base URL timeouts
+
+  * Thanks to `@jrbenny35 <https://github.com/jrbenny35>`_ for the PR
+
 **1.3.0 (2017-02-27)**
 
 * Add base URL to metadata provided by
