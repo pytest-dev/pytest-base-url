@@ -25,4 +25,3 @@ deploy:
     tags: true
     repo: pytest-dev/pytest-base-url
     python: 3.6
-    condition: "$TOXENV = pytest30"
