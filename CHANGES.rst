@@ -1,6 +1,10 @@
 Release Notes
 -------------
 
+**1.4.1 (2017-06-22)**
+
+* Update dependency of requests to require v2.9 or later.
+
 **1.4.0 (2017-06-12)**
 
 * Add verify base URL timeouts
