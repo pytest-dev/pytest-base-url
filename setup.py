@@ -10,7 +10,7 @@ setup(name='pytest-base-url',
       packages=['pytest_base_url'],
       install_requires=[
           'pytest>=2.7.3',
-          'requests'],
+          'requests>=2.9'],
       setup_requires=['setuptools_scm'],
       entry_points={'pytest11': ['base_url = pytest_base_url.plugin']},
       license='Mozilla Public License 2.0 (MPL 2.0)',
