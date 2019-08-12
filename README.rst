@@ -37,6 +37,13 @@ To install pytest-base-url:
 
   $ pip install pytest-base-url
 
+Contributing
+------------
+
+We welcome contributions.
+
+To learn more, see `Development <https://github.com/pytest-dev/pytest-base-url/blob/master/development.rst>`_
+
 Specifying a Base URL
 ---------------------
 
