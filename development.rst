@@ -1,7 +1,7 @@
 Development
 ===========
 
-To contribute to `pytest-html` you can use `Pipenv`_ to manage
+To contribute to `pytest-base-url` you can use `Pipenv`_ to manage
 a python virtual environment and `pre-commit <https://pre-commit.com/>`_ to help you with
 styling and formatting.
 
