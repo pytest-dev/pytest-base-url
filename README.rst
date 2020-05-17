@@ -135,7 +135,7 @@ provided either by the command line or in a configuration file:
   import pytest
 
   @pytest.mark.skipif(
-      'dev' in pytest.config.getoption('base_url'),
+      "'dev' in config.getoption('base_url')",
       reason='Search not available on dev')
   def test_search(base_url):
       assert 200 == urllib2.urlopen('{0}/search'.format(base_url)).getcode()
