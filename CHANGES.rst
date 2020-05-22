@@ -1,6 +1,12 @@
 Release Notes
 -------------
 
+**1.4.2 (unreleased)**
+
+* Lazy load requests dependency to reduce cost
+
+  * Thanks to `@boxed <https://github.com/boxed>`_ for the PR
+
 **1.4.1 (2017-06-22)**
 
 * Update dependency of requests to require v2.9 or later.
