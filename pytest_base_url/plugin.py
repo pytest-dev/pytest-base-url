@@ -5,9 +5,6 @@
 import os
 
 import pytest
-import requests
-from requests.packages.urllib3.util.retry import Retry
-from requests.adapters import HTTPAdapter
 
 
 @pytest.fixture(scope="session")
@@ -22,8 +19,14 @@ def base_url(request):
 @pytest.fixture(scope="session", autouse=True)
 def _verify_url(request, base_url):
     """Verifies the base URL"""
+
     verify = request.config.option.verify_base_url
     if base_url and verify:
+        # Lazy load requests to reduce cost for tests that don't use the plugin
+        import requests
+        from requests.packages.urllib3.util.retry import Retry
+        from requests.adapters import HTTPAdapter
+
         session = requests.Session()
         retries = Retry(backoff_factor=0.1, status_forcelist=[500, 502, 503, 504])
         session.mount(base_url, HTTPAdapter(max_retries=retries))
