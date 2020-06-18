@@ -34,8 +34,8 @@ def _verify_url(request, base_url):
 
 
 def pytest_configure(config):
-    if hasattr(config, "slaveinput"):
-        return  # xdist slave
+    if hasattr(config, "workerinput"):
+        return  # don't run configure on xdist worker nodes
     base_url = config.getoption("base_url") or config.getini("base_url")
     if base_url is not None:
         config.option.base_url = base_url
