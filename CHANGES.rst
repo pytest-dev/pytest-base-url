@@ -7,6 +7,10 @@ Release Notes
 
   * Thanks to `@boxed <https://github.com/boxed>`_ for the PR
 
+* Fixed compatibility with ``pytest-xdist`` 2.0+ (supporting >= 1.22.3)
+
+  * Thanks to `@Zac-HD <https://github.com/Zac-HD>`_ for the PR
+
 **1.4.1 (2017-06-22)**
 
 * Update dependency of requests to require v2.9 or later.
