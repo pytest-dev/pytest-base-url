@@ -1,6 +1,10 @@
 Release Notes
 -------------
 
+**2.0.0 (unreleased)**
+
+* Drop support for python 2.7
+
 **1.4.2 (2020-06-20)**
 
 * Lazy load requests dependency to reduce cost

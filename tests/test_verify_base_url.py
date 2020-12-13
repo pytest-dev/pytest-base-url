@@ -1,14 +1,7 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-import pytest
 from requests.packages.urllib3.util.retry import Retry
-
-
-# TODO: Remove this when we remove support for python 2.7
-@pytest.fixture(autouse=True)
-def httpserver(httpserver):
-    return httpserver
 
 
 def test_ignore_bad_url_by_default(testdir, httpserver):

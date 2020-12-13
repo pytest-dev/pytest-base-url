@@ -25,8 +25,8 @@ Requirements
 
 You will need the following prerequisites in order to use pytest-base-url:
 
-- Python 2.7, 3.6, PyPy, or PyPy3
-- py.test 2.7 or newer
+- Python 3.6+ or PyPy3
+- pytest 5.0 or newer
 
 Installation
 ------------
@@ -64,7 +64,7 @@ You can specify the base URL on the command line:
 
 .. code-block:: bash
 
-  $ py.test --base-url http://www.example.com
+  $ pytest --base-url http://www.example.com
 
 Using a Configuration File
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
