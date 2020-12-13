@@ -8,23 +8,23 @@ jobs:
       sudo: required
       env: TOXENV=linting
 
-    -
-      python: 2.7
-      env: TOXENV=py27
+    # -
+    #   python: 2.7
+    #   env: TOXENV=py27
 
-    -
-      python: 3.6
-      env: TOXENV=py36
+    # -
+    #   python: 3.6
+    #   env: TOXENV=py36
 
-    -
-      python: 3.7
-      dist: xenial
-      sudo: required
-      env: TOXENV=py37
+    # -
+    #   python: 3.7
+    #   dist: xenial
+    #   sudo: required
+    #   env: TOXENV=py37
 
-    -
-      python: pypy
-      env: TOXENV=pypy
+    # -
+    #   python: pypy
+    #   env: TOXENV=pypy
 
     -
       python: pypy3
