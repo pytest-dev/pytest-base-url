@@ -1,0 +1,57 @@
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "pytest-base-url"
+version = "2.0.0"
+description = "pytest plugin for URL based testing"
+license = "MPL-2.0"
+authors = [
+    "Dave Hunt <dhunt@mozilla.com>",
+    "Jim Brännlund <jimbrannlund@fastmail.com>"
+]
+readme = "README.rst"
+homepage = "https://github.com/pytest-dev/pytest-base-url"
+repository = "https://github.com/pytest-dev/pytest-base-url"
+keywords = [
+    "pytest",
+    "base",
+    "url",
+    "mozilla",
+    "automation"
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Framework :: Pytest",
+    "Intended Audience :: Developers",
+    "Operating System :: POSIX",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: MacOS :: MacOS X",
+    "Topic :: Software Development :: Quality Assurance",
+    "Topic :: Software Development :: Testing",
+    "Topic :: Utilities",
+]
+packages = [
+    { include = "pytest_base_url", from = "src" },
+]
+include = [
+    { path = "tests", format = "sdist" },
+]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+pytest = ">=3.0.0,<8.0.0"
+requests = ">=2.9"
+
+[tool.poetry.dev-dependencies]
+black = "^22.1.0"
+flake8 = "^4.0.1"
+tox = "^3.24.5"
+pre-commit = "^2.17.0"
+
+[tool.poetry.plugins.pytest11]
+base_url = 'pytest_base_url.plugin'
+
+[tool.black]
+target-version = ['py37']
