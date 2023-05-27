@@ -66,5 +66,5 @@ def test_url_fails(testdir, httpserver, monkeypatch):
     out = failed[0].longrepr.reprcrash.message
     assert len(failed) == 1
     assert "Max retries exceeded with url:" in out
-    assert "Caused by NewConnectionError" in out
-    assert "Failed to establish a new connection" in out
+    assert "Caused by NameResolutionError" in out
+    assert "Failed to resolve" in out
