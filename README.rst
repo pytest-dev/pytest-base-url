@@ -63,7 +63,7 @@ You can specify the base URL on the command line:
 
 .. code-block:: bash
 
-  $ py.test --base-url http://www.example.com
+  $ pytest --base-url http://www.example.com
 
 Using a Configuration File
 ^^^^^^^^^^^^^^^^^^^^^^^^^^

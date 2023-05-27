@@ -1,6 +1,12 @@
 Release Notes
 -------------
 
+**2.1.0 (2023-05-27)**
+
+* Add support for ``pytest-metadata`` 3.x
+
+* Switch to Hatch
+
 **2.0.0 (2022-03-27)**
 
 * Drop python 2.7 and 3.6 support
