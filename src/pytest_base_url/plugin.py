@@ -3,7 +3,6 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import os
-
 import pytest
 
 
@@ -39,8 +38,14 @@ def pytest_configure(config):
     base_url = config.getoption("base_url") or config.getini("base_url")
     if base_url is not None:
         config.option.base_url = base_url
-        if hasattr(config, "_metadata"):
-            config._metadata["Base URL"] = base_url
+        metadata = config.pluginmanager.getplugin("metadata")
+        if metadata:
+            try:
+                from pytest_metadata.plugin import metadata_key
+
+                config.stash[metadata_key]["Base URL"] = base_url
+            except ImportError:  # pytest-metadata < 3.x
+                config._metadata["Base URL"] = base_url
 
 
 def pytest_report_header(config, startdir):

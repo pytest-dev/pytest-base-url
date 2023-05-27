@@ -82,3 +82,16 @@ def test_env_var_set(testdir, monkeypatch):
     reprec = testdir.inline_run()
     passed, skipped, failed = reprec.listoutcomes()
     assert len(passed) == 1
+
+
+def test_metadata(testdir, monkeypatch):
+    testdir.makepyfile(
+        """
+        def test_config(metadata):
+            assert metadata["Base URL"] == 'yeehaw'
+    """
+    )
+    monkeypatch.setenv("PYTEST_BASE_URL", "yeehaw")
+    reprec = testdir.inline_run()
+    passed, skipped, failed = reprec.listoutcomes()
+    assert len(passed) == 1
