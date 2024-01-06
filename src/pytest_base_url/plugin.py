@@ -48,7 +48,7 @@ def pytest_configure(config):
                 config._metadata["Base URL"] = base_url
 
 
-def pytest_report_header(config, startdir):
+def pytest_report_header(config, start_path):
     base_url = config.getoption("base_url")
     if base_url:
         return "baseurl: {0}".format(base_url)
