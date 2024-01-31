@@ -1,7 +1,11 @@
 Release Notes
 -------------
 
-**2.1.0 (2023-05-27)**
+**2.1.0 (2024-01-31)**
+
+* Drop support for python 3.7
+
+* Add support for python 3.11 - 3.12
 
 * Add support for ``pytest-metadata`` 3.x
 
