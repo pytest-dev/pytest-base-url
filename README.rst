@@ -103,6 +103,18 @@ application and ``live_server.url`` returns the base URL of the site.
   def test_search(base_url):
       assert 200 == urllib2.urlopen('{0}/search'.format(base_url)).getcode()
 
+By default, the base URL and verification fixtures have session scope. If you
+override ``base_url`` with a narrower scope, set ``--base-url-scope`` to match
+it. For the function-scoped example above, run:
+
+.. code-block:: bash
+
+  $ pytest --base-url-scope function
+
+The supported scopes are ``function``, ``class``, ``module``, ``package``, and
+``session``. When verification is enabled, the URL is verified once per chosen
+scope, after the overridden fixture has started the server.
+
 Available Live Servers
 ----------------------
 

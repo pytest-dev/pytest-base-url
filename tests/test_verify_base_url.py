@@ -2,6 +2,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from requests.packages.urllib3.util.retry import Retry
+import pytest
 
 from packaging.version import Version
 from requests.packages.urllib3 import __version__ as URLLIB3_VERSION
@@ -68,3 +69,50 @@ def test_url_fails(testdir, httpserver, monkeypatch):
     assert "Max retries exceeded with url:" in out
     assert "Caused by NameResolutionError" in out
     assert "Failed to resolve" in out
+
+
+@pytest.mark.parametrize("scope", ["function", "class", "module", "package", "session"])
+@pytest.mark.parametrize("verify", [False, True])
+def test_custom_fixture_scope(testdir, monkeypatch, scope, verify):
+    verified = []
+    monkeypatch.setenv("VERIFY_BASE_URL", "false")
+    monkeypatch.setattr("requests.Session.get", lambda self, url: verified.append(url))
+    testdir.makeconftest("""
+        import pytest
+
+        @pytest.fixture(scope={!r})
+        def base_url():
+            return "http://example.test"
+    """.format(scope))
+    testdir.makepyfile("""
+        class TestURLs:
+            def test_first(self, base_url):
+                assert base_url == "http://example.test"
+
+            def test_second(self, base_url):
+                assert base_url == "http://example.test"
+    """)
+    args = ["--base-url-scope", scope]
+    if verify:
+        args.append("--verify-base-url")
+    reprec = testdir.inline_run(*args)
+    reprec.assertoutcome(passed=2)
+    expected = (2 if scope == "function" else 1) if verify else 0
+    assert verified == ["http://example.test"] * expected
+
+
+def test_default_scope_verifies_once(testdir, monkeypatch):
+    verified = []
+    monkeypatch.setattr("requests.Session.get", lambda self, url: verified.append(url))
+    testdir.makepyfile("""
+        def test_first(base_url):
+            assert base_url == "http://example.test"
+
+        def test_second(base_url):
+            assert base_url == "http://example.test"
+    """)
+    reprec = testdir.inline_run(
+        "--base-url", "http://example.test", "--verify-base-url"
+    )
+    reprec.assertoutcome(passed=2)
+    assert verified == ["http://example.test"]

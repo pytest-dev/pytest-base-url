@@ -1,6 +1,10 @@
 Release Notes
 -------------
 
+**Unreleased**
+
+* Add ``--base-url-scope`` to support narrower-scoped ``base_url`` overrides.
+
 **2.1.0 (2024-01-31)**
 
 * Drop support for python 3.7

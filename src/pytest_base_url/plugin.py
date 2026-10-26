@@ -6,7 +6,11 @@ import os
 import pytest
 
 
-@pytest.fixture(scope="session")
+def _base_url_scope(fixture_name, config):
+    return config.getoption("base_url_scope")
+
+
+@pytest.fixture(scope=_base_url_scope)
 def base_url(request):
     """Return a base URL"""
     config = request.config
@@ -15,7 +19,7 @@ def base_url(request):
         return base_url
 
 
-@pytest.fixture(scope="session", autouse=True)
+@pytest.fixture(scope=_base_url_scope, autouse=True)
 def _verify_url(request, base_url):
     """Verifies the base URL"""
 
@@ -61,6 +65,12 @@ def pytest_addoption(parser):
         metavar="url",
         default=os.getenv("PYTEST_BASE_URL", None),
         help="base url for the application under test.",
+    )
+    parser.addoption(
+        "--base-url-scope",
+        choices=["function", "class", "module", "package", "session"],
+        default="session",
+        help="scope of the base URL and verification fixtures (default: session).",
     )
     parser.addoption(
         "--verify-base-url",
